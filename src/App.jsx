@@ -1,5 +1,5 @@
 import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
 
 import Home from './pages/Home';
 import AllJobs from './pages/AllJobs';
@@ -8,12 +8,15 @@ import About from './pages/About';
 import Signup from './pages/auth/Signup';
 import Login from './pages/auth/Login';
 import Navbar from './components/Navbar';
+import Footer from './components/Footer';
 
 const App = () => {
+  const adminPath=useLocation().pathname.includes("admin")
+  const employerPath=useLocation().pathname.includes("employer")
   return (
     <>
       <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <Navbar />
+        {adminPath|| employerPath? null :<Navbar />}
       </div>
 
       <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -26,6 +29,8 @@ const App = () => {
           <Route path='/login' element={<Login />} />
         </Routes>
       </div>
+        {adminPath|| employerPath? null :<Footer />}
+
     </>
   );
 };

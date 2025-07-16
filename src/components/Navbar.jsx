@@ -1,9 +1,12 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { assets } from "../assets/assets";
 import React from "react";
 import { Link } from "react-router-dom";
+import AppContext from '../context/AppContext'
+import { useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
+  const navigate = useNavigate();
   const [open, setOpen] = React.useState(false);
 
   return (
@@ -19,38 +22,22 @@ const Navbar = () => {
 
       {/* Desktop Menu */}
       <div className="hidden sm:flex items-center gap-8">
-        <a href="#">Home</a>
-        <a href="#">About</a>
-        <a href="#">Contact</a>
-
+        <Link to={'/'} >Home</Link>
+        <Link to={'/all-jobs'} >Jobs</Link>
+        <Link to={'/about'} >About</Link>
+       
         {/* Search Bar */}
         <div className="hidden lg:flex items-center text-sm gap-2 border border-gray-300 px-3 rounded-full">
           <input
             className="py-1.5 w-full bg-transparent outline-none placeholder-gray-500"
             type="text"
-            placeholder="Search products"
+            placeholder="Search Jobs .."
           />
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-            <path
-              d="M10.836 10.615 15 14.695"
-              stroke="#7A7B7D"
-              strokeWidth="1.2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-            <path
-              clipRule="evenodd"
-              d="M9.141 11.738c2.729-1.136 4.001-4.224 2.841-6.898S7.67.921 4.942 2.057C2.211 3.193.94 6.281 2.1 8.955s4.312 3.92 7.041 2.783"
-              stroke="#7A7B7D"
-              strokeWidth="1.2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
+          
         </div>
 
         {/* Login Button */}
-        <button className="cursor-pointer px-8 py-2 bg-primary hover:bg-opacity-90 transition text-white rounded-full">
+        <button onClick={()=>navigate('/login')} className="cursor-pointer px-8 py-2 bg-primary hover:bg-opacity-90 transition text-white rounded-full">
           Login
         </button>
       </div>
@@ -74,16 +61,10 @@ const Navbar = () => {
           open ? "flex" : "hidden"
         } absolute top-[60px] left-0 w-full bg-white shadow-md py-4 flex-col items-start gap-2 px-5 text-sm md:hidden`}
       >
-        <a href="#" className="block">
-          Home
-        </a>
-        <a href="#" className="block">
-          About
-        </a>
-        <a href="#" className="block">
-          Contact
-        </a>
-        <button className="cursor-pointer px-6 py-2 mt-2 bg-primary hover:bg-opacity-90 transition text-white rounded-full text-sm">
+         <Link to={'/'} >Home</Link>
+        <Link to={'/all-jobs'} >Jobs</Link>
+        <Link to={'/about'} >About</Link>
+        <button onClick={()=>navigate('/login')} className="cursor-pointer px-6 py-2 mt-2 bg-primary hover:bg-opacity-90 transition text-white rounded-full text-sm">
           Login
         </button>
       </div>
