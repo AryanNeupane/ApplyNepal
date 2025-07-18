@@ -1,5 +1,6 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useState, useEffect } from "react";  
 import { useNavigate } from "react-router-dom";
+import { categories } from "../assets/assets";
 
 // Create a new context that will hold app-wide data
 export const AppContext = createContext();
@@ -19,6 +20,17 @@ const AppContextProvider = ({ children }) => {
   const [admin, setAdmin] = useState(false);
 
   // All values that we want to share through the context
+
+  const [categoriesData, setCategoriesData] = useState([]);
+
+  const fetchCategories =() => {
+    setCategoriesData(categories);
+  };
+
+  useEffect(() => {
+     fetchCategories();
+  },[]);
+
   const value = {
     navigate,
     user,
@@ -27,14 +39,11 @@ const AppContextProvider = ({ children }) => {
     setEmployer,
     admin,
     setAdmin,
+    categoriesData
   };
 
   // The context provider that wraps children and shares the value object
-  return (
-    <AppContext.Provider value={value}>
-      {children}
-    </AppContext.Provider>
-  );
+  return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
 };
 
 // Export the provider to use it in other parts of the app
