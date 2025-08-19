@@ -1,13 +1,21 @@
 import { useContext, useState } from "react";
 import { assets } from "../assets/assets";
 import React from "react";
-import { Link } from "react-router-dom";
-import AppContext from '../context/AppContext'
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from "react-router-dom";
+import { AppContext } from "../context/AppContext";   // ✅ make sure it's a named export
 
 const Navbar = () => {
-  const navigate = useNavigate();
+  const navigate = useNavigate();                     // ✅ only navigate from here
+  const { setQuery } = useContext(AppContext);        // ✅ get setQuery from context
+
   const [open, setOpen] = React.useState(false);
+  const [input, setInput] = useState("");
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    setQuery(input);
+    navigate("/all-jobs");
+  };
 
   return (
     <nav className="flex items-center justify-between px-6 md:px-16 lg:px-24 xl:px-32 py-4 border-b border-gray-300 bg-white relative transition-all">
@@ -22,22 +30,27 @@ const Navbar = () => {
 
       {/* Desktop Menu */}
       <div className="hidden sm:flex items-center gap-8">
-        <Link to={'/'} >Home</Link>
-        <Link to={'/all-jobs'} >Jobs</Link>
-        <Link to={'/about'} >About</Link>
-       
+        <Link to="/">Home</Link>
+        <Link to="/all-jobs">Jobs</Link>
+        <Link to="/about">About</Link>
+
         {/* Search Bar */}
         <div className="hidden lg:flex items-center text-sm gap-2 border border-gray-300 px-3 rounded-full">
           <input
             className="py-1.5 w-full bg-transparent outline-none placeholder-gray-500"
             type="text"
             placeholder="Search Jobs .."
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            onKeyDown={(e) => e.key === "Enter" && handleSearch(e)}
           />
-          
         </div>
 
         {/* Login Button */}
-        <button onClick={()=>navigate('/login')} className="cursor-pointer px-8 py-2 bg-primary hover:bg-opacity-90 transition text-white rounded-full">
+        <button
+          onClick={() => navigate("/login")}
+          className="cursor-pointer px-8 py-2 bg-primary hover:bg-opacity-90 transition text-white rounded-full"
+        >
           Login
         </button>
       </div>
@@ -61,10 +74,13 @@ const Navbar = () => {
           open ? "flex" : "hidden"
         } absolute top-[60px] left-0 w-full bg-white shadow-md py-4 flex-col items-start gap-2 px-5 text-sm md:hidden`}
       >
-         <Link to={'/'} >Home</Link>
-        <Link to={'/all-jobs'} >Jobs</Link>
-        <Link to={'/about'} >About</Link>
-        <button onClick={()=>navigate('/login')} className="cursor-pointer px-6 py-2 mt-2 bg-primary hover:bg-opacity-90 transition text-white rounded-full text-sm">
+        <Link to="/">Home</Link>
+        <Link to="/all-jobs">Jobs</Link>
+        <Link to="/about">About</Link>
+        <button
+          onClick={() => navigate("/login")}
+          className="cursor-pointer px-6 py-2 mt-2 bg-primary hover:bg-opacity-90 transition text-white rounded-full text-sm"
+        >
           Login
         </button>
       </div>

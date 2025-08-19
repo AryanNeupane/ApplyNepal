@@ -1,8 +1,7 @@
 import React, { createContext, useState, useEffect } from "react";  
 import { useNavigate } from "react-router-dom";
-import { categories, jobs } from "../assets/assets"; // Also make sure you import `jobs`
+import { categories, jobs } from "../assets/assets";
 
-// Create a new context
 export const AppContext = createContext();
 
 const AppContextProvider = ({ children }) => {
@@ -14,6 +13,7 @@ const AppContextProvider = ({ children }) => {
 
   const [categoriesData, setCategoriesData] = useState([]);
   const [jobData, setJobData] = useState([]);
+  const [query, setQuery] = useState("");   // ✅ moved inside
 
   const fetchCategories = () => {
     setCategoriesData(categories);
@@ -38,6 +38,8 @@ const AppContextProvider = ({ children }) => {
     setAdmin,
     categoriesData,
     jobData,
+    query,
+    setQuery,
   };
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
